@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cases - Flip Platform</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    .tabs a { margin-right: 16px; text-decoration: none; }
+    .active { font-weight: bold; text-decoration: underline; }
+    table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background: #f5f5f5; }
+  </style>
+</head>
+<body>
+  <h1>Cases</h1>
+
+  <div class="tabs">
+    <a th:href="@{/cases(status='active')}" th:classappend="${status}=='active' ? 'active' : ''">Active</a>
+    <a th:href="@{/cases(status='inactive')}" th:classappend="${status}=='inactive' ? 'active' : ''">Inactive</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Case #</th>
+        <th>Brand</th>
+        <th>Jurisdiction</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="c : ${cases}">
+        <td>
+            <a th:href="@{/cases/{caseNumber}(caseNumber=${c.caseNumber})}"
+               th:text="${c.caseNumber}">
+            </a>
+        </td>
+        <td th:text="${c.brand}">Example Brand</td>
+        <td th:text="${c.jurisdiction}">N.D. Georgia</td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(cases)}">
+        <td colspan="3">No cases in this tab.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:16px;">
+    <a href="/">Back home</a>
+  </p>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="'Case ' + ${caseInfo.caseNumber}">Case</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    .meta { margin: 12px 0 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background: #f5f5f5; }
+  </style>
+</head>
+<body>
+
+  <p><a th:href="@{/cases(status=${caseInfo.status})}">← Back to cases</a></p>
+
+  <h1 th:text="'Case: ' + ${caseInfo.caseNumber}">Case</h1>
+
+  <div class="meta">
+    <div><strong>Brand:</strong> <span th:text="${caseInfo.brand}">Example Brand</span></div>
+    <div><strong>Jurisdiction:</strong> <span th:text="${caseInfo.jurisdiction}">N.D. Georgia</span></div>
+    <div><strong>Status:</strong> <span th:text="${caseInfo.status}">active</span></div>
+  </div>
+
+  <h2>Defendants</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>DOE</th>
+        <th>Marketplace</th>
+        <th>Seller Name</th>
+        <th>Merchant ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="d : ${defendants}">
+        <td th:text="${d.doe}">1</td>
+        <td th:text="${d.marketplace}">Amazon</td>
+        <td th:text="${d.sellerName}">Seller A</td>
+        <td th:text="${d.merchantId}">MERCH-001</td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(defendants)}">
+        <td colspan="4">No defendants for this case.</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
